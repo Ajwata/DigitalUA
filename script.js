@@ -1,22 +1,3 @@
-const revealItems = document.querySelectorAll(
-  ".section, .service-card, .why-card, .step, .glass-card"
-);
-
-revealItems.forEach((item) => item.classList.add("reveal"));
-
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-      }
-    });
-  },
-  { threshold: 0.2 }
-);
-
-revealItems.forEach((item) => observer.observe(item));
-
 const hero = document.querySelector(".hero");
 const glow1 = document.querySelector(".glow-1");
 const glow2 = document.querySelector(".glow-2");
@@ -36,3 +17,22 @@ window.addEventListener("mousemove", (event) => {
     glow2.style.transform = `translate3d(${-x}px, ${-y}px, 0)`;
   }
 });
+
+const menuToggle = document.querySelector(".menu-toggle");
+const navActions = document.querySelector(".nav-actions");
+
+if (menuToggle && navActions) {
+  menuToggle.addEventListener("click", () => {
+    const isOpen = navActions.classList.toggle("open");
+    menuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+  });
+
+  navActions.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      if (window.innerWidth <= 920) {
+        navActions.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+      }
+    });
+  });
+}
